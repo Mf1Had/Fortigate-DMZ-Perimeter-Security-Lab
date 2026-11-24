@@ -6,7 +6,7 @@ Dokumentasi praktik laboratorium keamanan jaringan (*Network Security Engineerin
 
 ## 1. Arsitektur & Topologi Jaringan
 
-![Topologi Jaringan](<assets/Topologi-jaringan.png>)
+![Topologi Jaringan](<Topologi-jaringan.png>)
 
 ### Gambaran Umum Infrastruktur
 * **Perimeter Firewall (`FortiGate NGFW`):** Bertindak sebagai gerbang keamanan utama antara jaringan eksternal (`port3` / WAN) dan jaringan internal (`port2` / LAN & DMZ). Mengelola translasi alamat keluar (**SNAT / Masquerade**) serta penerjemahan alamat masuk (**DNAT / Virtual IP**) untuk layanan publik di DMZ.
@@ -51,7 +51,7 @@ Untuk mengizinkan pengguna eksternal mengakses layanan web di Server DMZ tanpa m
 * **Mapped IPv4 Address:** `172.16.10.10`
 * **Port Forwarding:** `Enabled` (**Protocol:** `TCP`, **External Port:** `80` $\rightarrow$ **Map to Port:** `80`)
 
-![Virtual IP FortiGate](<assets/Virtual-IP-FortiGate.png>)
+![Virtual IP FortiGate](Virtual-IP-FortiGate.png)
 
 ### C. Kebijakan Keamanan Firewall (`Firewall Policy`)
 FortiGate menerapkan prinsip ***Implicit Deny*** secara bawaan, sehingga seluruh lalu lintas lintas-zona harus diizinkan secara eksplisit:
@@ -61,7 +61,7 @@ FortiGate menerapkan prinsip ***Implicit Deny*** secara bawaan, sehingga seluruh
 | **1** | `LAN-to-Internet` | `port2` (`INTERNAL-LAN-DMZ`) | `port3` (`WAN`) | `LAN-Subnet` (`192.168.10.0/24`), `DMZ-Subnet` (`172.16.10.0/24`) | `all` | `ALL` | **ACCEPT** | **Enabled** (SNAT) |
 | **3** | `WAN-to-DMZ-Web` | `port3` (`WAN`) | `port2` (`INTERNAL-LAN-DMZ`) | `all` | `VIP-Web-DMZ` | `HTTP` | **ACCEPT** | **Disabled** (Ditangani VIP) |
 
-![Firewall Policy FortiGate](<assets/Firewall-Policy-FortiGate.png>)
+![Firewall Policy FortiGate](<Firewall-Policy-FortiGate.png>)
 
 ---
 
@@ -79,16 +79,16 @@ Pengujian dilakukan secara bertahap dari sisi internal (`VPC`), segmen DMZ (`Ubu
 ### Bukti Pengujian Akses Klien Internal (`VPC`) & Server DMZ (`Ubuntu`)
 * Klien internal (`VPC`) berhasil memperoleh IP DHCP, menjangkau internet (`8.8.8.8`), dan terhubung ke Server DMZ (`172.16.10.10`).
 
-![Testing Ping VPC](<assets/Testing-VPC.png>)
+![Testing Ping VPC](Testing-Ping-VPC.png)
 
 * Server DMZ (`Ubuntu Server`) memiliki konfigurasi IP statis `172.16.10.10/24`, layanan web port `80` aktif, dan berhasil melakukan *ping* ke `8.8.8.8`.
 
-![Testing Ping Server DMZ](<assets/Testing-ServerDMZ.png>)
+![Testing Ping Server DMZ](<Testing-Ping-Server DMZ.png>)
 
 ### Bukti Pengujian Akses Publik ke Server DMZ (Port Forwarding / VIP)
 * Pengujian HTTP dari terminal `Router ISP` (sisi WAN) menuju IP Publik Virtual IP (`100.100.100.2`) berhasil menarik halaman web dari Ubuntu Server DMZ (`172.16.10.10`) dengan peningkatan *Hit Count* pada objek `VIP-Web-DMZ` dan policy `WAN-to-DMZ-Web`.
 
-![Testing VIP Port Forwarding](<assets/Testing-VIP-DMZ.png>)
+![Testing VIP Port Forwarding](<Testing-VIP-DMZ.png>)
 
 ---
 
