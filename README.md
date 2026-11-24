@@ -79,11 +79,11 @@ Pengujian dilakukan secara bertahap dari sisi internal (`VPC`), segmen DMZ (`Ubu
 ### Bukti Pengujian Akses Klien Internal (`VPC`) & Server DMZ (`Ubuntu`)
 * Klien internal (`VPC`) berhasil memperoleh IP DHCP, menjangkau internet (`8.8.8.8`), dan terhubung ke Server DMZ (`172.16.10.10`).
 
-![Testing Ping VPC](Testing-Ping-VPC.png)
+![Testing Ping VPC](Testing-VPC.png)
 
 * Server DMZ (`Ubuntu Server`) memiliki konfigurasi IP statis `172.16.10.10/24`, layanan web port `80` aktif, dan berhasil melakukan *ping* ke `8.8.8.8`.
 
-![Testing Ping Server DMZ](<Testing-Ping-Server DMZ.png>)
+![Testing Ping Server DMZ](<Testing-ServerDMZ.png>)
 
 ### Bukti Pengujian Akses Publik ke Server DMZ (Port Forwarding / VIP)
 * Pengujian HTTP dari terminal `Router ISP` (sisi WAN) menuju IP Publik Virtual IP (`100.100.100.2`) berhasil menarik halaman web dari Ubuntu Server DMZ (`172.16.10.10`) dengan peningkatan *Hit Count* pada objek `VIP-Web-DMZ` dan policy `WAN-to-DMZ-Web`.
